@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grimório — Organizador de RPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-blobs" aria-hidden="true">
+  <span class="blob blob-green"></span>
+  <span class="blob blob-purple"></span>
+</div>
+
+<!-- ======================= HOME ======================= -->
+<section id="view-home" class="view active">
+  <button type="button" class="half half-player" id="btn-goto-player">
+    <div class="half-inner">
+      <span class="half-rune">⚔</span>
+      <h2 class="half-title">Jogador</h2>
+      <p class="half-sub">Monte suas fichas de personagem</p>
+    </div>
+  </button>
+
+  <button type="button" class="half half-master" id="btn-goto-master">
+    <div class="half-inner">
+      <span class="half-rune">☾</span>
+      <h2 class="half-title">Mestre</h2>
+      <p class="half-sub">Crie NPCs e monstros</p>
+    </div>
+  </button>
+</section>
+
+<!-- ======================= PLAYER ======================= -->
+<section id="view-player" class="view">
+  <header class="app-header header-player">
+    <button type="button" class="btn-back" data-back="home">← Voltar</button>
+    <h1>Seus Personagens</h1>
+  </header>
+
+  <!-- gallery -->
+  <div class="gallery" id="player-gallery">
+    <div class="card-grid" id="player-grid"></div>
+  </div>
+
+  <!-- editor -->
+  <div class="editor hidden" id="player-editor">
+    <div class="editor-topbar">
+      <button type="button" class="btn-back" data-back="player-list">← Meus personagens</button>
+      <button type="button" class="btn-danger" id="player-delete">Excluir ficha</button>
+    </div>
+
+    <div class="glass-panel editor-panel">
+      <div class="field-grid cols-3">
+        <label class="field"><span>Nome</span><input type="text" id="p-name" placeholder="Ex: Elenya Ventoclaro"></label>
+        <label class="field"><span>Classe</span><input type="text" id="p-class" placeholder="Ex: Bruxo"></label>
+        <label class="field"><span>Nível</span><input type="number" id="p-level" min="1" max="20" value="1"></label>
+        <label class="field"><span>Linhagem / Espécie</span><input type="text" id="p-species" placeholder="Ex: Tiefling"></label>
+        <label class="field"><span>Antecedente</span><input type="text" id="p-background" placeholder="Ex: Eremita"></label>
+        <label class="field"><span>Alinhamento</span><input type="text" id="p-alignment" placeholder="Ex: Neutro e Bom"></label>
+      </div>
+
+      <div class="stat-row">
+        <label class="stat-box"><span>CA</span><input type="number" id="p-ac" value="10"></label>
+        <label class="stat-box"><span>Iniciativa</span><input type="number" id="p-init" value="0"></label>
+        <label class="stat-box"><span>Deslocamento</span><input type="text" id="p-speed" value="9m"></label>
+        <label class="stat-box"><span>PV Atual</span><input type="number" id="p-hp-current" value="10"></label>
+        <label class="stat-box"><span>PV Máximo</span><input type="number" id="p-hp-max" value="10"></label>
+      </div>
+
+      <h3 class="section-label">Atributos</h3>
+      <div class="abilities-row" id="p-abilities-row"></div>
+
+      <div class="field-grid cols-2">
+        <label class="field"><span>Equipamento</span><textarea id="p-equipment" placeholder="Armas, armaduras, itens, moedas..."></textarea></label>
+        <label class="field"><span>Características &amp; Talentos</span><textarea id="p-traits" placeholder="Traços de classe, talentos, feitiços conhecidos..."></textarea></label>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-primary btn-green" id="player-save">Salvar personagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= MASTER ======================= -->
+<section id="view-master" class="view">
+  <header class="app-header header-master">
+    <button type="button" class="btn-back" data-back="home">← Voltar</button>
+    <h1>Caderno do Mestre</h1>
+    <div class="tab-switch">
+      <button type="button" class="tab-btn active" data-tab="npc">NPCs</button>
+      <button type="button" class="tab-btn" data-tab="monster">Monstros</button>
+    </div>
+  </header>
+
+  <!-- NPC gallery -->
+  <div class="gallery" id="npc-gallery">
+    <div class="card-grid" id="npc-grid"></div>
+  </div>
+
+  <!-- NPC editor -->
+  <div class="editor hidden" id="npc-editor">
+    <div class="editor-topbar">
+      <button type="button" class="btn-back" data-back="npc-list">← NPCs</button>
+      <button type="button" class="btn-danger" id="npc-delete">Excluir NPC</button>
+    </div>
+    <div class="glass-panel editor-panel">
+      <div class="field-grid cols-2">
+        <label class="field"><span>Nome</span><input type="text" id="npc-name" placeholder="Ex: Barnabé, o taverneiro"></label>
+        <label class="field"><span>Raça / Ocupação</span><input type="text" id="npc-race" placeholder="Ex: Humano, comerciante"></label>
+        <label class="field"><span>Local</span><input type="text" id="npc-location" placeholder="Ex: Taverna do Javali Dourado"></label>
+        <label class="field"><span>Atitude</span>
+          <select id="npc-attitude">
+            <option>Amigável</option>
+            <option>Neutro</option>
+            <option>Hostil</option>
+            <option>Desconhecido</option>
+          </select>
+        </label>
+      </div>
+      <div class="field-grid cols-1">
+        <label class="field"><span>Aparência</span><textarea id="npc-appearance" placeholder="Como o NPC se parece..."></textarea></label>
+        <label class="field"><span>Personalidade &amp; Motivações</span><textarea id="npc-personality" placeholder="Maneirismos, objetivos, segredos..."></textarea></label>
+        <label class="field"><span>Notas do Mestre</span><textarea id="npc-notes" placeholder="Ganchos de aventura, relações..."></textarea></label>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-primary btn-purple" id="npc-save">Salvar NPC</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Monster gallery -->
+  <div class="gallery hidden" id="monster-gallery">
+    <div class="card-grid" id="monster-grid"></div>
+  </div>
+
+  <!-- Monster editor -->
+  <div class="editor hidden" id="monster-editor">
+    <div class="editor-topbar">
+      <button type="button" class="btn-back" data-back="monster-list">← Monstros</button>
+      <button type="button" class="btn-danger" id="monster-delete">Excluir monstro</button>
+    </div>
+    <div class="glass-panel editor-panel">
+      <div class="field-grid cols-3">
+        <label class="field"><span>Nome</span><input type="text" id="mon-name" placeholder="Ex: Lobo Sombrio"></label>
+        <label class="field"><span>Tipo</span><input type="text" id="mon-type" placeholder="Ex: Fera média"></label>
+        <label class="field"><span>ND (Desafio)</span><input type="text" id="mon-cr" placeholder="Ex: 1/2"></label>
+      </div>
+      <div class="stat-row">
+        <label class="stat-box"><span>CA</span><input type="number" id="mon-ac" value="12"></label>
+        <label class="stat-box wide"><span>PV</span><input type="text" id="mon-hp" placeholder="Ex: 11 (2d8+2)"></label>
+        <label class="stat-box"><span>Deslocamento</span><input type="text" id="mon-speed" value="12m"></label>
+      </div>
+
+      <h3 class="section-label">Atributos</h3>
+      <div class="abilities-row" id="mon-abilities-row"></div>
+
+      <div class="field-grid cols-1">
+        <label class="field"><span>Ações</span><textarea id="mon-actions" placeholder="Mordida: +4 para acertar, 1d6+2 de dano perfurante..."></textarea></label>
+        <label class="field"><span>Traços Especiais</span><textarea id="mon-traits" placeholder="Sentidos, resistências, habilidades passivas..."></textarea></label>
+        <label class="field"><span>Notas do Mestre</span><textarea id="mon-notes" placeholder="Onde usar, táticas, variações..."></textarea></label>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-primary btn-purple" id="monster-save">Salvar monstro</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
